@@ -99,7 +99,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false,
+                    ""initialStateCheck"": true,
                     ""priority"": 0
                 },
                 {
@@ -117,7 +117,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ceafb942-2a64-4c54-945b-bc5a8b62ebf6"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/{PrimaryAction}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

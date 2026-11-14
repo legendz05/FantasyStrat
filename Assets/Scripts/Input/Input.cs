@@ -4,17 +4,28 @@ using UnityEngine.InputSystem;
 public class Input : MonoBehaviour
 {
     InputSystem inputSystem;
+    bool isRotating;
 
     private void OnEnable()
     {
         if (inputSystem == null)
         {
             inputSystem = new InputSystem();
-
             inputSystem.Camera.Get().actionTriggered += OnActionTriggered;
         }
 
         inputSystem.Enable();
+    }
+
+    private void OnDisable()
+    {
+        isRotating = false;
+        inputSystem?.Disable();
+    }
+
+    private void OnDestroy()
+    {
+        inputSystem?.Dispose();
     }
 
     private void OnActionTriggered(InputAction.CallbackContext context)
@@ -37,8 +48,15 @@ public class Input : MonoBehaviour
 
     private void Select(InputAction.CallbackContext context)
     {
-        ReferenceStorer.Instance.cameraController.Move(context.ReadValue<Vector2>());
+        if (context.performed && Mouse.current != null)
+        {
+            isRotating = true;
+            ReferenceStorer.Instance.cameraController.BeginRotate(Mouse.current.position.ReadValue());
+        }
+        else if (context.canceled)
+        {
+            isRotating = false;
+            ReferenceStorer.Instance.cameraController.EndRotate();
+        }
     }
 }
-
-
