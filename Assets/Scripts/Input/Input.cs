@@ -38,6 +38,12 @@ public class Input : MonoBehaviour
             case var action when action == inputSystem.Camera.Select:
                 Select(context);
                 break;
+            case var action when action == inputSystem.Camera.Sprint:
+                Sprint(context);
+                break;
+            case var action when action == inputSystem.Camera.Zoom:
+                Zoom(context);
+                break;
         }
     }
 
@@ -49,14 +55,18 @@ public class Input : MonoBehaviour
     private void Select(InputAction.CallbackContext context)
     {
         if (context.performed && Mouse.current != null)
-        {
-            isRotating = true;
             ReferenceStorer.Instance.cameraController.BeginRotate(Mouse.current.position.ReadValue());
-        }
         else if (context.canceled)
-        {
-            isRotating = false;
             ReferenceStorer.Instance.cameraController.EndRotate();
-        }
+    }
+
+    private void Sprint(InputAction.CallbackContext context)
+    {
+        ReferenceStorer.Instance.cameraController.Sprint(context);
+    }
+
+    private void Zoom(InputAction.CallbackContext context)
+    {
+        ReferenceStorer.Instance.cameraController.Zoom(context.ReadValue<Vector2>());
     }
 }
